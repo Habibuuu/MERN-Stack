@@ -1,6 +1,9 @@
+import axios from "axios";
 import { useState } from "react";
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 
 const WorkoutForm = () => {
+    const { dispatch } = useWorkoutsContext()
     const [title, setTitle] = useState('')
     const [load, setLoad] = useState('')
     const [reps, setReps] = useState('')
@@ -11,24 +14,33 @@ const WorkoutForm = () => {
 
         const workout = {title, load, reps}
 
-        const response = await fetch('/api/workouts', {
-            method: 'POST',
-            body: JSON.stringify(workout),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        const json = await response.json()
+        // const response = await fetch('/api/workouts', {
+        //     method: 'POST',
+        //     body: JSON.stringify(workout),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // })
+        // const json = await response.json()
 
-        if (!response.ok) {
-            setError(json.error)
-        }
-        if (response.ok) {
-            setTitle('')
-            setLoad('')
-            setReps('')
+        // if (!response.ok) {
+        //     setError(json.error)
+        // }
+        // if (response.ok) {
+        //     setTitle('')
+        //     setLoad('')
+        //     setReps('')
+        //     setError(null)
+        //     console.log('new workout added', json)
+        // }
+        
+        try {
+            const res = await axios.post('/api/workouts', workout)
             setError(null)
-            console.log('new workout added', json)
+            console.log('new workout added')
+            dispatch({type: 'CREATE_WORKOUT', payload: res.data})
+        } catch (err) {
+            setError(err.response.data.error)
         }
     }
 

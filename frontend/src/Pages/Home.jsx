@@ -1,12 +1,13 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 
 //Components
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
-    const [workouts, setWorkouts] = useState(null)
+    const {workouts, dispatch} = useWorkoutsContext()
 
     //Fetch
     // useEffect(() => {
@@ -26,14 +27,13 @@ const Home = () => {
         const fetchWorkouts = async () => {
             try {
                 const res = await axios.get('/api/workouts');
-                const json = res.data;
-                setWorkouts(json);
+                dispatch({type: 'SET_WORKOUTS', payload: res.data})
             } catch (err) {
                 console.log('Gagal membuat data');
             }
         }
         fetchWorkouts()
-    }, []);
+    }, [dispatch]);
     
     return (
         <div className="home">
