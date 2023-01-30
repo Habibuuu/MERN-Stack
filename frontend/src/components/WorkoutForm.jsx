@@ -14,26 +14,6 @@ const WorkoutForm = () => {
         e.preventDefault()
 
         const workout = {title, load, reps}
-
-        // const response = await fetch('/api/workouts', {
-        //     method: 'POST',
-        //     body: JSON.stringify(workout),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // })
-        // const json = await response.json()
-
-        // if (!response.ok) {
-        //     setError(json.error)
-        // }
-        // if (response.ok) {
-        //     setTitle('')
-        //     setLoad('')
-        //     setReps('')
-        //     setError(null)
-        //     console.log('new workout added', json)
-        // }
         
         try {
             const res = await axios.post('/api/workouts', workout)

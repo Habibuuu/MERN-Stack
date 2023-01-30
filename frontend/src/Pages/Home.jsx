@@ -9,20 +9,6 @@ import WorkoutForm from "../components/WorkoutForm";
 const Home = () => {
     const {workouts, dispatch} = useWorkoutsContext()
 
-    //Fetch
-    // useEffect(() => {
-    //     const fetchWorkouts = async () => {
-    //         const response = await fetch('/api/workouts')
-    //         const json = await response.json()
-
-    //         if (response.ok) {
-    //             setWorkouts(json);
-    //         }
-    //     }
-
-    //     fetchWorkouts()
-    // }, []);
-
     useEffect(() => {
         const fetchWorkouts = async () => {
             try {
